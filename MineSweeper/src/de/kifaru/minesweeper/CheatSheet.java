@@ -14,8 +14,8 @@ class CheatSheet {
             isMine = true;
         }
 
-        private void addImpact(int impact) {
-            this.impact += impact;
+        private void addImpact() {
+            this.impact += 1;
         }
     }
 
@@ -23,7 +23,7 @@ class CheatSheet {
     private final int height;
     private CheatSheetField[][] fields;
 
-    private CheatSheet(int width, int height) {
+    CheatSheet(int width, int height) {
         this.width = width;
         this.height = height;
         fields = new CheatSheetField[height][width];
@@ -34,19 +34,12 @@ class CheatSheet {
         }
     }
     
-    private CheatSheet(int width, int height, List<ImpactField> impactRegion, List<MineField> minePositions) {
-        this(width, height);
-        addImpact(impactRegion);
-        putMines(minePositions);
-    }
-    
-    private void addImpact(List<ImpactField> impactRegion) {
-        for(ImpactField pos:impactRegion) {
+    void addImpact(List<Position> impactRegion) {
+        for(Position pos:impactRegion) {
             final int x = pos.x;
             final int y = pos.y;
-            final int impact = pos.impact;
             if (isInRange(x, y)) {
-                fields[y][x].addImpact(impact);
+                fields[y][x].addImpact();
             }
         }
     }
@@ -55,15 +48,13 @@ class CheatSheet {
         return x >= 0 && x < width && y >= 0 && y < height;
     }
 
-    private void putMines(List<MineField> minePositions) {
-        for (Field pos:minePositions) {
+    void putMines(List<Position> minePositions) {
+        for (Position pos:minePositions) {
             fields[pos.y][pos.x].setMine();
         }
     }
 
-    static List<String> format(int width, int height, List<ImpactField> impactRegions, List<MineField> minePositions) {
-        final CheatSheet sheet = new CheatSheet(width, height, impactRegions, minePositions);
-        final CheatSheetField[][] fields = sheet.fields;
+    List<String> format(int width, int height, List<Position> impactRegions, List<Position> minePositions) {
         List<String> result = new ArrayList<String>();
         for (int j = 0; j < height; j++) {
             StringBuilder line = new StringBuilder(width);

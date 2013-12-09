@@ -7,15 +7,15 @@ import java.util.List;
 
 import org.junit.Test;
 
-public class BoardTest {
+public class ConfigurationTest {
 
     @Test
     public void findOneMineInOneLine() {
         String[] givenLines = {".*."};
         
-        List<MineField> mines = Board.findAllMineFields(givenLines);
+        List<Position> mines = Configuration.findAllMineFields(givenLines);
             
-        Field[] expectedArray = new Field[] {new Field(1,0)};
+        Position[] expectedArray = new Position[] {new Position(1,0)};
         assertEquals(mines, Arrays.asList(expectedArray));
     }
     
@@ -23,9 +23,9 @@ public class BoardTest {
     public void findMultipleMinesInOneLine() {
         String[] givenLines = {".*..*."};
         
-        List<MineField> mines = Board.findAllMineFields(givenLines);
+        List<Position> mines = Configuration.findAllMineFields(givenLines);
             
-        Field[] expectedArray = new Field[] {new Field(1,0), new Field(4,0)};
+        Position[] expectedArray = new Position[] {new Position(1,0), new Position(4,0)};
         assertEquals(mines, Arrays.asList(expectedArray));
     }
 
@@ -39,9 +39,9 @@ public class BoardTest {
                                "......",
                               };
         
-        List<MineField> mines = Board.findAllMineFields(givenLines);
+        List<Position> mines = Configuration.findAllMineFields(givenLines);
             
-        Field[] expectedArray = new Field[] {new Field(1,1), new Field(4,1), new Field(1,4), new Field(4,4)};
+        Position[] expectedArray = new Position[] {new Position(1,1), new Position(4,1), new Position(1,4), new Position(4,4)};
         assertEquals(mines, Arrays.asList(expectedArray));
     }
     
@@ -49,22 +49,22 @@ public class BoardTest {
     public void parseEmptyBoard_OneFieldOnly() {
         String[] givenBoard = new String[] {"."};
         
-        Board board = Board.parse(givenBoard);
+        Configuration board = Configuration.parse(givenBoard);
 
         assertEquals(1, board.getHeight());
         assertEquals(1, board.getWidth());
-        assertEquals(Arrays.asList(new Field[] {}), board.getMineFields());
+        assertEquals(Arrays.asList(new Position[] {}), board.getMineFields());
     }
 
     @Test
     public void parseEmptyBoard_OneLineOnly() {
         String[] givenBoard = new String[] {"..."};
         
-        Board board = Board.parse(givenBoard);
+        Configuration board = Configuration.parse(givenBoard);
 
         assertEquals(1, board.getHeight());
         assertEquals(3, board.getWidth());
-        assertEquals(Arrays.asList(new Field[] {}), board.getMineFields());
+        assertEquals(Arrays.asList(new Position[] {}), board.getMineFields());
     }
 
     @Test
@@ -75,20 +75,20 @@ public class BoardTest {
                  "....."
                 };
         
-        Board board = Board.parse(givenBoard);
+        Configuration board = Configuration.parse(givenBoard);
         
         assertEquals(3, board.getHeight());
         assertEquals(5, board.getWidth());
-        assertEquals(Arrays.asList(new Field[] {}), board.getMineFields());
+        assertEquals(Arrays.asList(new Position[] {}), board.getMineFields());
     }
 
     @Test
     public void parseOneLine_oneMine() {
         String[] givenBoard = new String[] {".*."};
         
-        Board board = Board.parse(givenBoard);
+        Configuration board = Configuration.parse(givenBoard);
         
-        final Field[] expectedPositions = new Field[] {new Field(1, 0)};
+        final Position[] expectedPositions = new Position[] {new Position(1, 0)};
         assertEquals(1, board.getHeight());
         assertEquals(3, board.getWidth());
         assertEquals(Arrays.asList(expectedPositions), board.getMineFields());
@@ -98,9 +98,9 @@ public class BoardTest {
     public void parseMultipleLines_oneMine() {
         String[] givenBoard = new String[] {"...", ".*.", "..."};
         
-        Board board = Board.parse(givenBoard);
+        Configuration board = Configuration.parse(givenBoard);
         
-        final Field[] expectedPositions = new Field[] {new Field(1, 1)};
+        final Position[] expectedPositions = new Position[] {new Position(1, 1)};
         assertEquals(3, board.getHeight());
         assertEquals(3, board.getWidth());
         assertEquals(Arrays.asList(expectedPositions), board.getMineFields());
@@ -113,11 +113,11 @@ public class BoardTest {
                                             ".*..*.", 
                                             "......"};
         
-        Board board = Board.parse(givenBoard);
+        Configuration board = Configuration.parse(givenBoard);
         
-        final Field[] expectedPositions = new Field[] 
-            {new Field(1, 1),
-             new Field(4, 1)
+        final Position[] expectedPositions = new Position[] 
+            {new Position(1, 1),
+             new Position(4, 1)
             };
         assertEquals(3, board.getHeight());
         assertEquals(6, board.getWidth());
