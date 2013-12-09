@@ -29,8 +29,9 @@ public class Board extends HashMap<Position, Field> {
     Field getField(final int colNumber, final int lineNumber) {
         Field field = get(new Position(colNumber, lineNumber));
         if (field == null) {
-            field = theEmptyField;
+            return theEmptyField;
+        } else {
+            return field;
         }
-        return field;
     }
 }
