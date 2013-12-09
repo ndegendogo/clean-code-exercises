@@ -11,19 +11,19 @@ public class MineSweeperTest {
     
     @Test
     public void emptyBoard_OneFieldOnly() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(new String[] {"."});
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(new String[] {"."});
         verifyCheatSheet(cheatSheet, new String[]{"0"});
     }
 
     @Test
     public void emptyBoard_OneLineOnly() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(new String[] {"..."});
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(new String[] {"..."});
         verifyCheatSheet(cheatSheet, new String[]{"000"});
     }
 
     @Test
     public void emptyBoard_MultipleLines() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[]{".....",
                              ".....",
                              "....."
@@ -35,13 +35,13 @@ public class MineSweeperTest {
 
     @Test
     public void oneLine_oneMine() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(new String[] {".*."});
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(new String[] {".*."});
         verifyCheatSheet(cheatSheet, new String[]{"1*1"});
     }
 
     @Test
     public void multipleLines_oneMine() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[]{"...", 
                              ".*.", 
                              "..."});
@@ -52,7 +52,7 @@ public class MineSweeperTest {
     
     @Test
     public void multipleLines_multipleMines() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[]{"......", 
                              ".*..*.", 
                              "......"});
@@ -63,7 +63,7 @@ public class MineSweeperTest {
     
     @Test
     public void oneMine_limitedImpact() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[] {".....", 
                               ".....",
                               "..*..", 
@@ -79,7 +79,7 @@ public class MineSweeperTest {
     
     @Test
     public void twoMines_overlappingImpact() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[] {".....", 
                               ".*...",
                               ".....", 
@@ -95,7 +95,7 @@ public class MineSweeperTest {
 
     @Test
     public void minesAtEdgesAndInCorners() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[] {"..*..", 
                               ".....",
                               "*...*", 
@@ -111,7 +111,7 @@ public class MineSweeperTest {
 
     @Test
     public void minesWithMaximumImpact() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[] {".....", 
                               ".***.",
                               ".*.*.", 
@@ -127,18 +127,18 @@ public class MineSweeperTest {
 
     @Test
     public void emptyBoard_ZeroWidth() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(new String[] {""});
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(new String[] {""});
         verifyCheatSheet(cheatSheet, new String[]{""});
     }
 
     @Test
     public void emptyBoard_ZeroHeight() {
-        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(new String[] {});
+        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(new String[] {});
         verifyCheatSheet(cheatSheet, new String[]{});
     }
 
-    private static void verifyCheatSheet(List<String> cheatSheet, final String[] strings) {
-        List<String> expectedCheatSheet = Arrays.asList(strings);
+    private static void verifyCheatSheet(final List<String> cheatSheet, final String[] strings) {
+        final List<String> expectedCheatSheet = Arrays.asList(strings);
         assertEquals(expectedCheatSheet, cheatSheet);
     }
     

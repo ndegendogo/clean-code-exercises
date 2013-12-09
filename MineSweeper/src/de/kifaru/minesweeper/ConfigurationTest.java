@@ -11,31 +11,32 @@ public class ConfigurationTest {
 
     @Test
     public void findOneMineInOneLine() {
-        String[] givenLines = {".*."};
-        List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
-        Position[] expectedMines = new Position[] {new Position(1,0)};
+        final String[] givenLines = {".*."};
+        final List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
+        final Position[] expectedMines = new Position[] {new Position(1,0)};
         verifyMines(expectedMines, foundMines);
     }
 
     @Test
     public void findMultipleMinesInOneLine() {
-        String[] givenLines = {".*..*."};
-        List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
-        Position[] expectedMines = new Position[] {new Position(1,0), new Position(4,0)};
+        final String[] givenLines = {".*..*."};
+        final List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
+        final Position[] expectedMines = new Position[] {new Position(1,0), new Position(4,0)};
         verifyMines(expectedMines, foundMines);
     }
 
     @Test
     public void findMultipleMinesInMultipleLines() {
-        String[] givenLines = {"......", 
-                               ".*..*.", 
-                               "......",
-                               "......",
-                               ".*..*.", 
-                               "......",
-                              };
-        List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
-        Position[] expectedMines = new Position[] {new Position(1,1), new Position(4,1), new Position(1,4), new Position(4,4)};
+        final String[] givenLines = 
+               {"......", 
+                ".*..*.", 
+                "......",
+                "......",
+                ".*..*.", 
+                "......",
+               };
+        final List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
+        final Position[] expectedMines = new Position[] {new Position(1,1), new Position(4,1), new Position(1,4), new Position(4,4)};
         verifyMines(expectedMines, foundMines);
     }
     
@@ -95,16 +96,15 @@ public class ConfigurationTest {
         verifyConfig(config, 6, 3, expectedPositions);
     }
 
-    private void verifyMines(Position[] expectedPositions, List<Position> minePositions) {
+    private void verifyMines(final Position[] expectedPositions, final List<Position> minePositions) {
         assertEquals(Arrays.asList(expectedPositions), minePositions);
     }
     
-    private void verifyConfig(final Configuration config, final int expWidth, final int expHeight,
+    private void verifyConfig(final Configuration config, final int expectedWidth, final int expectedHeight,
             final Position[] expectedPositions) {
-        assertEquals(expHeight, config.getHeight());
-        assertEquals(expWidth, config.getWidth());
+        assertEquals(expectedHeight, config.getHeight());
+        assertEquals(expectedWidth, config.getWidth());
         assertEquals(Arrays.asList(expectedPositions), config.getMinePositions());
     }
-    
     
 }

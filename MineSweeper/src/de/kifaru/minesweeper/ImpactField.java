@@ -3,8 +3,8 @@ package de.kifaru.minesweeper;
 public class ImpactField extends Field {
     private int impact;
 
-    ImpactField() {
-        impact = 1;
+    ImpactField(int impact) {
+        this.impact = impact;
     }
     
     int getImpact() {
@@ -13,5 +13,9 @@ public class ImpactField extends Field {
 
     void addImpact(int increment) {
         impact += increment;
+    }
+
+    String format() {
+        return Integer.toString(getImpact());
     }
 }

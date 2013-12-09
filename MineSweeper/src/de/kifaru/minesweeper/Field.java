@@ -1,5 +1,6 @@
 package de.kifaru.minesweeper;
 
-public class Field {
+public abstract class Field {
 
+    abstract String format();
 }

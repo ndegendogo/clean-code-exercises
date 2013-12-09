@@ -6,18 +6,18 @@ import org.junit.Test;
 
 public class ImpactMapTest {
 
-    static private Position givenPosition = new Position(1, 2);
+    private static final Position givenPosition = new Position(1, 2);
     
     @Test
     public void addImpactToEmptyField() {
-        ImpactMap map = makeEmptyMap();
+        final ImpactMap map = makeEmptyMap();
         whenAddImpact(map);
         thenImpact(map, 1);
     }
 
     @Test
     public void addImpactToImpactField_add() {
-        ImpactMap map = makeMapWithImpactField();
+        final ImpactMap map = makeMapWithImpactField();
         whenAddImpact(map);
         thenImpact(map, 2);
     }
@@ -27,19 +27,18 @@ public class ImpactMapTest {
     }
     
     private ImpactMap makeMapWithImpactField() {
-        ImpactMap map = new ImpactMap();
-        map.put(givenPosition, new ImpactField());
+        final ImpactMap map = new ImpactMap();
+        map.put(givenPosition, new ImpactField(1));
         return map;
     }
 
-    private void whenAddImpact(ImpactMap map) {
+    private void whenAddImpact(final ImpactMap map) {
         map.addImpact(givenPosition);
     }
 
-    private void thenImpact(ImpactMap map, final int impact) {
-        Field field = map.get(givenPosition);
-        assertTrue(field instanceof ImpactField);
-        assertEquals(impact, ((ImpactField)field).getImpact());
+    private void thenImpact(final ImpactMap map, final int impact) {
+        final ImpactField field = map.get(givenPosition);
+        assertEquals(impact, field.getImpact());
     }
 
 }

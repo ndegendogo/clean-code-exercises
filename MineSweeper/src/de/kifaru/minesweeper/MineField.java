@@ -5,4 +5,7 @@ public class MineField extends Field {
     MineField() {
     }
 
+    String format() {
+        return "*";
+    }
 }

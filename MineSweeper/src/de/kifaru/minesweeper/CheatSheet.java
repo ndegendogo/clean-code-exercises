@@ -5,36 +5,25 @@ import java.util.List;
 
 class CheatSheet {
 
-    static List<String> formatBoard(Board board, int width, int height) {
-        final List<String> result = new ArrayList<String>();
-        for (int j = 0; j < height; j++) {
-            result.add(formatLine(board, j, width));
+    static List<String> formatBoard(final Board board, final int width, final int height) {
+        final List<String> lines = new ArrayList<String>();
+        for (int lineNumber = 0; lineNumber < height; lineNumber++) {
+            lines.add(formatLine(board, lineNumber, width));
         }
-        return result;
+        return lines;
     }
 
-    private static String formatLine(Board board, int j, int width) {
+    private static String formatLine(final Board board, final int lineNumber, final int width) {
         final StringBuilder line = new StringBuilder(width);
-        for (int i = 0; i < width; i ++) {
-            final Field field = board.get(new Position(i, j));
+        for (int colNumber = 0; colNumber < width; colNumber ++) {
+            final Field field = board.getField(colNumber, lineNumber);
             line.append(formatField(field));
         }
         return line.toString();
     }
 
     private static String formatField(final Field field) {
-        if (field == null) {
-            return "0";
-        } else if (field instanceof MineField) {
-            return "*";
-        } else if (field instanceof ImpactField) {
-            return format((ImpactField)field);
-        } else {
-            return "";
-        }
+        return field.format();
     }
 
-    private static String format(final ImpactField field) {
-        return Integer.toString(field.getImpact());
-    }
 }
