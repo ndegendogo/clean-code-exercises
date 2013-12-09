@@ -16,6 +16,6 @@ public class ImpactField extends Field {
     }
 
     String format() {
-        return Integer.toString(getImpact());
+        return CheatSheet.formatImpactField(impact);
     }
 }

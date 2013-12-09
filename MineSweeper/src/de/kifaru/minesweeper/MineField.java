@@ -6,6 +6,6 @@ public class MineField extends Field {
     }
 
     String format() {
-        return "*";
+        return CheatSheet.formatMineField();
     }
 }

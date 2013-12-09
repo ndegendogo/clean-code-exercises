@@ -26,4 +26,11 @@ class CheatSheet {
         return field.format();
     }
 
+    static String formatMineField() {
+        return "*";
+    }
+
+    static String formatImpactField(int impact) {
+        return Integer.toString(impact);
+    }
 }
