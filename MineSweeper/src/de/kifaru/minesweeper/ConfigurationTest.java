@@ -12,21 +12,17 @@ public class ConfigurationTest {
     @Test
     public void findOneMineInOneLine() {
         String[] givenLines = {".*."};
-        
-        List<Position> mines = Configuration.findAllMineFields(givenLines);
-            
-        Position[] expectedArray = new Position[] {new Position(1,0)};
-        assertEquals(mines, Arrays.asList(expectedArray));
+        List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
+        Position[] expectedMines = new Position[] {new Position(1,0)};
+        verifyMines(expectedMines, foundMines);
     }
-    
+
     @Test
     public void findMultipleMinesInOneLine() {
         String[] givenLines = {".*..*."};
-        
-        List<Position> mines = Configuration.findAllMineFields(givenLines);
-            
-        Position[] expectedArray = new Position[] {new Position(1,0), new Position(4,0)};
-        assertEquals(mines, Arrays.asList(expectedArray));
+        List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
+        Position[] expectedMines = new Position[] {new Position(1,0), new Position(4,0)};
+        verifyMines(expectedMines, foundMines);
     }
 
     @Test
@@ -38,90 +34,76 @@ public class ConfigurationTest {
                                ".*..*.", 
                                "......",
                               };
-        
-        List<Position> mines = Configuration.findAllMineFields(givenLines);
-            
-        Position[] expectedArray = new Position[] {new Position(1,1), new Position(4,1), new Position(1,4), new Position(4,4)};
-        assertEquals(mines, Arrays.asList(expectedArray));
+        List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
+        Position[] expectedMines = new Position[] {new Position(1,1), new Position(4,1), new Position(1,4), new Position(4,4)};
+        verifyMines(expectedMines, foundMines);
     }
     
     @Test
-    public void parseEmptyBoard_OneFieldOnly() {
-        String[] givenBoard = new String[] {"."};
-        
-        Configuration board = Configuration.parse(givenBoard);
-
-        assertEquals(1, board.getHeight());
-        assertEquals(1, board.getWidth());
-        assertEquals(Arrays.asList(new Position[] {}), board.getMineFields());
+    public void parseEmptyConfig_OneFieldOnly() {
+        final String[] givenConfig = new String[] {"."};
+        final Configuration config = Configuration.parse(givenConfig);
+        verifyConfig(config, 1, 1, new Position[] {});
     }
 
     @Test
-    public void parseEmptyBoard_OneLineOnly() {
-        String[] givenBoard = new String[] {"..."};
-        
-        Configuration board = Configuration.parse(givenBoard);
-
-        assertEquals(1, board.getHeight());
-        assertEquals(3, board.getWidth());
-        assertEquals(Arrays.asList(new Position[] {}), board.getMineFields());
+    public void parseEmptyConfig_OneLineOnly() {
+        final String[] givenConfig = new String[] {"..."};
+        final Configuration config = Configuration.parse(givenConfig);
+        verifyConfig(config, 3, 1, new Position[] {});
     }
 
     @Test
-    public void parseEmptyBoard_MultipleLines() {
-        String[] givenBoard = new String[] 
+    public void parseEmptyConfig_MultipleLines() {
+        final String[] givenConfig = new String[] 
                 {".....",
                  ".....",
                  "....."
                 };
-        
-        Configuration board = Configuration.parse(givenBoard);
-        
-        assertEquals(3, board.getHeight());
-        assertEquals(5, board.getWidth());
-        assertEquals(Arrays.asList(new Position[] {}), board.getMineFields());
+        final Configuration config = Configuration.parse(givenConfig);
+        verifyConfig(config, 5, 3, new Position[] {});
     }
 
     @Test
     public void parseOneLine_oneMine() {
-        String[] givenBoard = new String[] {".*."};
-        
-        Configuration board = Configuration.parse(givenBoard);
-        
+        final String[] givenConfig = new String[] {".*."};
+        final Configuration config = Configuration.parse(givenConfig);
         final Position[] expectedPositions = new Position[] {new Position(1, 0)};
-        assertEquals(1, board.getHeight());
-        assertEquals(3, board.getWidth());
-        assertEquals(Arrays.asList(expectedPositions), board.getMineFields());
+        verifyConfig(config, 3, 1, expectedPositions);
     }
 
     @Test
     public void parseMultipleLines_oneMine() {
-        String[] givenBoard = new String[] {"...", ".*.", "..."};
-        
-        Configuration board = Configuration.parse(givenBoard);
-        
+        final String[] givenConfig = new String[] {"...", ".*.", "..."};
+        final Configuration config = Configuration.parse(givenConfig);
         final Position[] expectedPositions = new Position[] {new Position(1, 1)};
-        assertEquals(3, board.getHeight());
-        assertEquals(3, board.getWidth());
-        assertEquals(Arrays.asList(expectedPositions), board.getMineFields());
+        verifyConfig(config, 3, 3, expectedPositions);
     }
 
     
     @Test
     public void parseMultipleLines_multipleMines() {
-        String[] givenBoard = new String[] {"......", 
-                                            ".*..*.", 
-                                            "......"};
-        
-        Configuration board = Configuration.parse(givenBoard);
-        
+        final String[] givenConfig = new String[] {
+                "......", 
+                ".*..*.", 
+                "......"};
+        final Configuration config = Configuration.parse(givenConfig);
         final Position[] expectedPositions = new Position[] 
             {new Position(1, 1),
              new Position(4, 1)
             };
-        assertEquals(3, board.getHeight());
-        assertEquals(6, board.getWidth());
-        assertEquals(Arrays.asList(expectedPositions), board.getMineFields());
+        verifyConfig(config, 6, 3, expectedPositions);
+    }
+
+    private void verifyMines(Position[] expectedPositions, List<Position> minePositions) {
+        assertEquals(Arrays.asList(expectedPositions), minePositions);
+    }
+    
+    private void verifyConfig(final Configuration config, final int expWidth, final int expHeight,
+            final Position[] expectedPositions) {
+        assertEquals(expHeight, config.getHeight());
+        assertEquals(expWidth, config.getWidth());
+        assertEquals(Arrays.asList(expectedPositions), config.getMinePositions());
     }
     
     

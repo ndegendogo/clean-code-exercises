@@ -6,22 +6,20 @@ import java.util.List;
 class MineSweeper {
 
     static List<String> makeCheatSheetForBoard(String[] givenBoard) {
-        final Configuration board = Configuration.parse(givenBoard);
-        final int width = board.getWidth();
-        final int height = board.getHeight();
-        final List<Position> minePositions = board.getMineFields();
-        final List<Position> impactRegions = MineSweeper.getImpactRegions(minePositions);
-        final CheatSheet sheet = new CheatSheet(width, height);
-        sheet.addImpact(impactRegions);
-        sheet.putMines(minePositions);
-        List<String> result = sheet.format(width, height, impactRegions, minePositions);
+        final Configuration config = Configuration.parse(givenBoard);
+        final List<Position> minePositions = config.getMinePositions();
+        final List<Position> impactRegions = getImpactRegions(minePositions);
+        final Board board = new Board();
+        board.putMines(minePositions);
+        board.addImpact(impactRegions);
+        List<String> result = CheatSheet.formatBoard(board, config.getWidth(), config.getHeight());
         return result;
     }
 
     private static List<Position> getImpactRegions(final List<Position> minePositions) {
         final List<Position> impactRegions = new ArrayList<Position>();
         for (Position mine:minePositions) {
-            impactRegions.addAll(MineSweeper.getImpactRegion(mine));
+            impactRegions.addAll(getImpactRegion(mine));
         }
         return impactRegions;
     }
