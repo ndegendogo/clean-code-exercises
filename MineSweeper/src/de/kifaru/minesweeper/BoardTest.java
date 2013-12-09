@@ -29,27 +29,6 @@ public class BoardTest {
         thenMine(board);
     }
 
-    @Test
-    public void addImpactToEmptyField() {
-        Board board = makeEmptyBoard();
-        whenAddImpact(board);
-        thenImpact(board, 1);
-    }
-
-    @Test
-    public void addImpactToMineField_noEffect() {
-        Board board = makeBoardWithMineField();
-        whenAddImpact(board);
-        thenMine(board);
-    }
-
-    @Test
-    public void addImpactToImpactField_add() {
-        Board board = makeBoardWithImpactField();
-        whenAddImpact(board);
-        thenImpact(board, 2);
-    }
-    
     private Board makeEmptyBoard() {
         return new Board();
     }
@@ -70,19 +49,8 @@ public class BoardTest {
         board.putMine(givenPosition);
     }
 
-    private void whenAddImpact(Board board) {
-        board.addImpact(givenPosition);
-    }
-
     private void thenMine(Board board) {
         Field field = board.get(givenPosition);
         assertTrue(field instanceof MineField);
     }
-    
-    private void thenImpact(Board board, final int impact) {
-        Field field = board.get(givenPosition);
-        assertTrue(field instanceof ImpactField);
-        assertEquals(impact, ((ImpactField)field).getImpact());
-    }
-
 }

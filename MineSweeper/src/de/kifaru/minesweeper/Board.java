@@ -6,34 +6,22 @@ import java.util.List;
 public class Board extends HashMap<Position, Field> {
 
     private static final long serialVersionUID = 1L;
-
+    private static final MineField theMine = new MineField();
+    
+    public Board() {
+    }
+    
+    public Board (ImpactMap map) {
+        this.putAll(map);
+    }
+    
     void putMine(Position pos) {
-        Field prevValue = get(pos);
-        if (prevValue == null || !(prevValue instanceof MineField)) {
-            Field value = new MineField();
-            put(pos, value);
-        }
+        put(pos, theMine);
     }
     
     void putMines(List<Position> positions) {
         for(Position pos:positions) {
             putMine(pos);
-        }
-    }
-
-    void addImpact(Position pos) {
-        Field prevValue = get(pos);
-        if (prevValue == null) {
-            Field value = new ImpactField();
-            put(pos, value);
-        } else if (prevValue instanceof ImpactField) {
-            ((ImpactField)prevValue).addImpact(1);
-        }
-    }
-
-    void addImpact(List<Position> positions) {
-        for (Position pos:positions) {
-            addImpact(pos);
         }
     }
 }

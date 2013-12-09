@@ -9,9 +9,10 @@ class MineSweeper {
         final Configuration config = Configuration.parse(givenBoard);
         final List<Position> minePositions = config.getMinePositions();
         final List<Position> impactRegions = getImpactRegions(minePositions);
-        final Board board = new Board();
+        final ImpactMap map = new ImpactMap();
+        map.addImpact(impactRegions);
+        final Board board = new Board(map);
         board.putMines(minePositions);
-        board.addImpact(impactRegions);
         List<String> result = CheatSheet.formatBoard(board, config.getWidth(), config.getHeight());
         return result;
     }
