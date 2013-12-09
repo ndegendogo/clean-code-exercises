@@ -48,7 +48,7 @@ class CheatSheet {
         }
     }
 
-    void patchMines(List<Position> minePositions) {
+    void putMines(List<Position> minePositions) {
         for (Position pos:minePositions) {
             fields[pos.y][pos.x].setMine();
         }

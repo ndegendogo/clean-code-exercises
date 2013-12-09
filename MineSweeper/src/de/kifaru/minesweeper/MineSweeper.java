@@ -11,7 +11,7 @@ class MineSweeper {
         final ArrayList<Position> impactRegions = MineSweeper.getImpactRegions(minePositions);
         final CheatSheet sheet = new CheatSheet(board.getWidth(), board.getHeight());
         sheet.addImpact(impactRegions);
-        sheet.patchMines(minePositions);
+        sheet.putMines(minePositions);
         List<String> result = sheet.toStrings();
         return result;
     }
