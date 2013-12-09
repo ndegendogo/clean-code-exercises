@@ -1,41 +1,45 @@
 package de.kifaru.minesweeper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 class Board {
     private int width;
     private int height;
-    private ArrayList<Position> minePositions;
+    private List<MineField> mineFields;
     
     static Board parse(String[] givenBoard) {
         Board board = new Board();
         board.height = givenBoard.length;
-        board.width = givenBoard[0].length();
-        board.minePositions = findAllMinePositions(givenBoard);
+        if (givenBoard.length > 0) {
+            board.width = givenBoard[0].length();
+        } else {
+            board.width = 0;
+        }
+        board.mineFields = findAllMineFields(givenBoard);
         return board;
     }
     
-    static ArrayList<Position> findAllMinePositions(String[] givenLines) {
-        ArrayList<Position> minePositions = new ArrayList<Position>();
+    static List<MineField> findAllMineFields(String[] givenLines) {
+        List<MineField> mineFields = new ArrayList<MineField>();
         for(int yPos = 0; yPos < givenLines.length; yPos ++) {
-            minePositions.addAll(findMinesInLine(givenLines[yPos], yPos));
+            mineFields.addAll(findMinesInLine(givenLines[yPos], yPos));
         }
-        return minePositions;
+        return mineFields;
     }
 
-    private static ArrayList<Position> findMinesInLine(String givenLine, int yPos) {
-        ArrayList<Position> minePositions = new ArrayList<Position>();
+    private static List<MineField> findMinesInLine(String givenLine, int yPos) {
+        List<MineField> mineFields = new ArrayList<MineField>();
         int xPos = -1;
         boolean found = false;
         do {
             xPos = givenLine.indexOf('*', xPos + 1);
             found = (xPos >= 0);
             if (found) {
-                Position mine = new Position(xPos, yPos);
-                minePositions.add(mine);
+                mineFields.add(new MineField(xPos, yPos));
             }
         } while (found);
-        return minePositions;
+        return mineFields;
     }
 
     int getWidth() {
@@ -46,8 +50,8 @@ class Board {
         return height;
     }
 
-    ArrayList<Position> getMinePositions() {
-        return new ArrayList<Position>(minePositions);
+    List<MineField> getMineFields() {
+        return new ArrayList<MineField>(mineFields);
     }
 
 }

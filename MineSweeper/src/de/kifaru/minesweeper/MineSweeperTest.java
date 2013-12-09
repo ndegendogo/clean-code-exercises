@@ -125,6 +125,18 @@ public class MineSweeperTest {
                                                   "12321"});
     }
 
+    @Test
+    public void emptyBoard_ZeroWidth() {
+        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(new String[] {""});
+        verifyCheatSheet(cheatSheet, new String[]{""});
+    }
+
+    @Test
+    public void emptyBoard_ZeroHeight() {
+        List<String> cheatSheet = MineSweeper.makeCheatSheetForBoard(new String[] {});
+        verifyCheatSheet(cheatSheet, new String[]{});
+    }
+
     private static void verifyCheatSheet(List<String> cheatSheet, final String[] strings) {
         List<String> expectedCheatSheet = Arrays.asList(strings);
         assertEquals(expectedCheatSheet, cheatSheet);
