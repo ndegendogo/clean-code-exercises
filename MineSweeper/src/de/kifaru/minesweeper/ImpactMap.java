@@ -3,6 +3,11 @@ package de.kifaru.minesweeper;
 import java.util.HashMap;
 import java.util.List;
 
+// Review: ImpactMap should not extend HashMap or it should not be public.
+// See Board for rationale.
+// Besides, this seems to be used for counting the neighboring mines, right?
+// Boards are guaranteed to be rectangular.
+// ImpactMap could be replaced with an int[][].
 public class ImpactMap extends HashMap<Position, ImpactField> {
 
     private static final long serialVersionUID = 1L;

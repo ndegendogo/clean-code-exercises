@@ -6,6 +6,10 @@ import org.junit.Test;
 
 public class BoardTest {
 
+    // Review: Missorted modifiers.
+    // It should be private static.
+    // And because it is never changed, it should be final, too.
+    // And because it then is a static final, and Position is an immutable value object, it should be renamed to GIVEN_POSITION.
     static private Position givenPosition = new Position(1, 2);
     
     @Test
