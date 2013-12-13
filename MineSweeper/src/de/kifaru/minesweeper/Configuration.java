@@ -3,6 +3,9 @@ package de.kifaru.minesweeper;
 import java.util.ArrayList;
 import java.util.List;
 
+// Review: Why is this class there?
+// Not asking about method parse, that makes sense, but the class as such...
+// Couldn't this be merged into Board?
 class Configuration {
     private final int width;
     private final int height;
@@ -16,6 +19,9 @@ class Configuration {
     
     static Configuration parse(final String[] givenConfig) {
         final int height = givenConfig.length;
+        // Review: width should be final.
+        // The code could be simplified to:
+        // final int width = givenConfig.length > 0 ? givenConfig[0].length() : 0;
         int width;
         if (givenConfig.length > 0) {
             width = givenConfig[0].length();
@@ -34,9 +40,23 @@ class Configuration {
         return mines;
     }
 
+    // Review: Variable name yPos too long. y is sufficient and perfectly clear.
+    // Review: Variable name givenLine confusing. Why givenLine? Why not just line?
     private static List<Position> findMinesInLine(final String givenLine, final int yPos) {
         final List<Position> mines = new ArrayList<Position>();
         int xPos = -1;
+        // Review: Initializing to false is redundant.
+        // Review: unnecessary do-while. Try this code:
+        // for (int xPos = -1; (xPos = givenLine.indexOf('*', xPos + 1)) > 0; ) {
+        //     mines.add(new Position(xPos, yPos);
+        // }
+        // Review: Maybe it's personal, but I find indexOf a bit difficult to understand.
+        // I would've done this:
+        // for (int x = 0; x < givenLine.length(); x++) {
+        //     if (givenLine.charAt(x) == '*') {
+        //         mines.add(new Position(x, yPos);
+        //     }
+        // }
         boolean found = false;
         do {
             xPos = givenLine.indexOf('*', xPos + 1);

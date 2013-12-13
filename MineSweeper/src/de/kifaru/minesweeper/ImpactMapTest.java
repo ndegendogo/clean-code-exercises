@@ -21,11 +21,15 @@ public class ImpactMapTest {
         whenAddImpact(map);
         thenImpact(map, 2);
     }
-    
+
+    // Review: could be static
+    // Review: should be named createEmptyImpactMap() or newEmptyImpactMap().
     private ImpactMap makeEmptyMap() {
         return new ImpactMap();
     }
-    
+
+    // Review: could be static
+    // Review: should be named createImpactMapWithOneField() or newImpactMapWithOneField().
     private ImpactMap makeMapWithImpactField() {
         final ImpactMap map = new ImpactMap();
         map.put(givenPosition, new ImpactField(1));
