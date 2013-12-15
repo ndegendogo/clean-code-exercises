@@ -1,10 +1,10 @@
 package de.kifaru.minesweeper;
 
 public class Position implements Comparable<Position> {
-    final int x;
-    final int y;
+    private final int x;
+    private final int y;
     
-    Position(int x, int y) {
+    Position(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
@@ -19,12 +19,12 @@ public class Position implements Comparable<Position> {
     
     @Override
     public int hashCode() {
-        return x + y;
+        return x ^ (y << 16);
     }
     
     @Override
     public String toString() {
-        return "x = " + x + ", y = " + y;
+        return "(" + x + "," + y + ")";
     }
 
     @Override
@@ -34,5 +34,13 @@ public class Position implements Comparable<Position> {
         else if (this.x < other.x) return -1;
         else if (this.x > other.x) return 1; 
         else return 0;
+    }
+
+    int getX() {
+        return x;
+    }
+
+    int getY() {
+        return y;
     }
 }
