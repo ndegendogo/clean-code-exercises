@@ -1,6 +1,6 @@
 package de.kifaru.minesweeper;
 
-public class ImpactField extends Field {
+class ImpactField extends Field {
     private int impact;
 
     ImpactField(int impact) {
@@ -15,7 +15,7 @@ public class ImpactField extends Field {
         impact += increment;
     }
 
-    String format() {
+    char format() throws MineSweeperException {
         return CheatSheet.formatImpactField(impact);
     }
 }

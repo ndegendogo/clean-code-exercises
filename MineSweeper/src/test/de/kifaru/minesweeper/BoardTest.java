@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class BoardTest {
 
-    static private Position givenPosition = new Position(1, 2);
+    private static final Position GIVEN_POSITION = new Position(1, 2);
     
     @Test
     public void addImpactToEmptyField() {
@@ -49,31 +49,33 @@ public class BoardTest {
     
     private Board makeBoardWithImpactField() {
         final Board board = new Board(3, 4);
-        board.put(givenPosition, new ImpactField(1));
+        board.setField(GIVEN_POSITION.getX(), GIVEN_POSITION.getY(), new ImpactField(1));
         return board;
     }
 
     private Board makeBoardWithMineField() {
         final Board board = new Board(3, 4);
-        board.put(givenPosition, new MineField());
+        board.setField(GIVEN_POSITION.getX(), GIVEN_POSITION.getY(), new MineField());
         return board;
     }
 
     private void whenAddImpact(final Board board) {
-        board.addImpact(givenPosition);
+        board.addImpact(GIVEN_POSITION);
     }
 
     private void whenPutMine(final Board board) {
-        board.putMine(givenPosition);
+        board.putMine(GIVEN_POSITION);
     }
     
-    private void thenImpact(final Board map, final int impact) {
-        final ImpactField field = (ImpactField) map.get(givenPosition);
-        assertEquals(impact, field.getImpact());
+    private void thenImpact(final Board board, final int impact) {
+        final Field field =  board.getField(GIVEN_POSITION.getX(), GIVEN_POSITION.getY());
+        
+        assertTrue(field instanceof ImpactField);
+        assertEquals(impact, ((ImpactField)field).getImpact());
     }
 
     private void thenMine(final Board board) {
-        final Field field = board.get(givenPosition);
+        final Field field = board.getField(GIVEN_POSITION.getX(), GIVEN_POSITION.getY());
         assertTrue(field instanceof MineField);
     }
 }
