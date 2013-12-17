@@ -1,6 +1,6 @@
 package de.kifaru.minesweeper;
 
-class Position implements Comparable<Position> {
+class Position {
     private final int x;
     private final int y;
     
@@ -33,14 +33,5 @@ class Position implements Comparable<Position> {
     @Override
     public String toString() {
         return "(" + x + "," + y + ")";
-    }
-
-    @Override
-    public int compareTo(final Position other) {
-        if (y < other.y) return -1;
-        else if (y > other.y) return 1;
-        else if (x < other.x) return -1;
-        else if (x > other.x) return 1; 
-        else return 0;
     }
 }
