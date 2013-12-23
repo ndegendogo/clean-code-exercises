@@ -1,22 +1,24 @@
 package de.kifaru.minesweeper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 class BoardImpl implements Board {
 
     private static final long serialVersionUID = 1L;
-    private static final MineField theMine = new MineField();
-    private static final ImpactField theEmptyField = new ImpactField(0);
     private final int width;
     private final int height;
-    private final HashMap<Position, Field> fields;
+    private final Field fields[][];
     
     private BoardImpl(final int width, final int height) {
         this.width = width;
         this.height = height;
-        fields = new HashMap<Position, Field>();
+        fields = new Field[height][width];
+        for(int j = 0; j < height; j ++) {
+            for (int i = 0; i < width; i ++) {
+                fields[j][i] = new Field();
+            }
+        }
     }
     
     public BoardImpl(final Configuration config) {
@@ -52,12 +54,21 @@ class BoardImpl implements Board {
     }
     
     void addImpact(final Position pos) {
-        final ImpactField prevValue = (ImpactField)fields.get(pos);
-        if (prevValue == null) {
-            fields.put(pos, new ImpactField(1));
+        final Field field = getField(pos.getX(), pos.getY());
+        field.addImpact(1);
+    }
+
+    @Override
+    public Field getField(final int colNumber, final int lineNumber) {
+        if (outOfBounds(colNumber, lineNumber)) {
+            return Field.getDefault();
         } else {
-            prevValue.addImpact(1);
+            return fields[lineNumber][colNumber];
         }
+    }
+
+    private boolean outOfBounds(final int x, final int y) {
+        return (x < 0 || x >= width || y < 0 || y >= height);
     }
 
     private void putMines(final Iterable<Position> positions) {
@@ -67,7 +78,8 @@ class BoardImpl implements Board {
     }
 
     void putMine(final Position pos) {
-        fields.put(pos, theMine);
+        final Field field = getField(pos.getX(), pos.getY());
+        field.putMine();
     }
     
     @Override
@@ -79,15 +91,4 @@ class BoardImpl implements Board {
     public int getHeight() {
         return height;
     }
-
-    @Override
-    public Field getField(final int colNumber, final int lineNumber) {
-        final Field field = fields.get(new Position(colNumber, lineNumber));
-        return defaultToEmptyFieldIfNull(field);
-    }
-
-    private Field defaultToEmptyFieldIfNull(final Field field) {
-        return field == null ? theEmptyField : field;
-    }
-
 }

@@ -1,9 +1,6 @@
 package de.kifaru.minesweeper;
 
-class MineField extends Field {
-
-    MineField() {
-    }
+class Mine extends FieldContent {
 
     char format() {
         return CheatSheet.formatMineField();

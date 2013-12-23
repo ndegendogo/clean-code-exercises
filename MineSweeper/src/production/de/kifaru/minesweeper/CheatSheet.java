@@ -28,6 +28,10 @@ class CheatSheet {
         return field.format();
     }
 
+    static char formatEmptyField() {
+        return '0';
+    }
+
     static char formatMineField() {
         return '*';
     }

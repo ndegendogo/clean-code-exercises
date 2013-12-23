@@ -1,9 +1,13 @@
 package de.kifaru.minesweeper;
 
-class ImpactField extends Field {
+class Impact extends FieldContent {
     private int impact;
 
-    ImpactField(int impact) {
+    Impact() {
+        this.impact = 1;
+    }
+
+    Impact(int impact) {
         this.impact = impact;
     }
     
