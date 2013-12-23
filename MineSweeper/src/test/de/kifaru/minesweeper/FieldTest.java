@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import de.kifaru.minesweeper.Field.FieldContent;
+
 public class FieldTest {
 
     @Test
@@ -46,11 +48,11 @@ public class FieldTest {
     }
     
     private static Field createImpactField() {
-        return new Field(new Impact());
+        return new Field(FieldContent.IMPACT);
     }
 
     private static Field createMineField() {
-        return new Field(new Mine());
+        return new Field(FieldContent.MINE);
     }
 
     private static void whenAddImpact(final Field field) {
@@ -62,11 +64,11 @@ public class FieldTest {
     }
     
     private static void thenImpact(final Field field, final int impact) {        
-        assertTrue(field.content instanceof Impact);
-        assertEquals(impact, ((Impact)field.content).getImpact());
+        assertTrue(field.isImpactField());
+        assertEquals(impact, field.getImpact());
     }
 
     private static void thenMine(final Field field) {
-        assertTrue(field.content instanceof Mine);
+        assertTrue(field.isMine());
     }
 }

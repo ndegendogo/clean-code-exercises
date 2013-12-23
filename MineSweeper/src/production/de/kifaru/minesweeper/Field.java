@@ -1,42 +1,72 @@
 package de.kifaru.minesweeper;
 
 class Field {
-    static private final Field theEmptyField = new Field();
-    FieldContent content;
+    
+    private FieldContent content;
+    private int impact;
     
     Field() {
-        content = new Empty();
+        content = FieldContent.EMPTY;
     }
     
-    Field(FieldContent content) {
-        this.content = content;
+    Field(int impact) {
+        this.content = FieldContent.IMPACT;
+        this.impact = impact;
     }
 
-    static Field getDefault() {
-        return theEmptyField;
+    Field(FieldContent contentEnum) {
+        this.content = contentEnum;
+        if (contentEnum == FieldContent.IMPACT) {
+            impact = 1;
+        }
+    }
+
+    boolean isEmpty() {
+        return content == FieldContent.EMPTY;
+    }
+
+    boolean isMine() {
+        return content == FieldContent.MINE;
+    }
+
+    boolean isImpactField() {
+        return content == FieldContent.IMPACT;
+    }
+
+    int getImpact() {
+        return impact;
     }
     
     void addImpact(int increment) {
         if (isEmpty()) {
-            content = new Impact();
+            impact = 1;
+            content = FieldContent.IMPACT;
         } else if (isImpactField()) {
-            ((Impact) content).addImpact(increment);
+            impact += increment;
         }
     }
 
-    boolean isImpactField() {
-        return content instanceof Impact;
-    }
-
-    boolean isEmpty() {
-        return content instanceof Empty;
-    }
-
     void putMine() {
-        content = new Mine();
+        content = FieldContent.MINE;
     }
 
     char format() {
-        return content.format();
+        switch (content) {
+            case EMPTY:
+                return CheatSheet.formatEmptyField();
+            case MINE:
+                return CheatSheet.formatMineField();
+            case IMPACT:
+                return CheatSheet.formatImpactField(getImpact());
+            default:
+                return 0;
+        }
+    }
+
+    enum FieldContent {
+        EMPTY,
+        MINE,
+        IMPACT,
+    ;
     }
 }

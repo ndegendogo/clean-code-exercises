@@ -126,15 +126,23 @@ public class MineSweeperTest {
     }
 
     @Test
-    public void emptyBoard_ZeroWidth() throws MineSweeperException {
-        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(new String[] {""});
-        verifyCheatSheet(cheatSheet, new String[]{""});
+    public void emptyBoard_ZeroWidth() {
+        try {
+            MineSweeper.makeCheatSheetForConfig(new String[] {""});
+            fail();
+        } catch (MineSweeperException e) {
+            assertEquals("Illegal configuration", e.getMessage());
+        }
     }
 
     @Test
-    public void emptyBoard_ZeroHeight() throws MineSweeperException {
-        final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(new String[] {});
-        verifyCheatSheet(cheatSheet, new String[]{});
+    public void emptyBoard_ZeroHeight() {
+        try {
+            MineSweeper.makeCheatSheetForConfig(new String[] {});
+            fail();
+        } catch (MineSweeperException e) {
+            assertEquals("Illegal configuration", e.getMessage());
+        }
     }
 
     private static void verifyCheatSheet(final List<String> cheatSheet, final String[] strings) {

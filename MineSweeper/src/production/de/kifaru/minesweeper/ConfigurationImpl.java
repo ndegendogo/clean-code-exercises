@@ -15,8 +15,11 @@ class ConfigurationImpl implements Configuration {
     }
     
     static Configuration parse(final String[] config) {
+        if (config.length == 0 || config[0].length() == 0) {
+            throw new MineSweeperException(MineSweeperException.ErrorCode.ILLEGAL_CONFIGURATION);
+        }
         final int height = config.length;
-        final int width = (config.length > 0) ? config[0].length() : 0;
+        final int width = config[0].length();
         final List<Position> minePositions = findAllMinePositions(config);
         return new ConfigurationImpl(width, height, minePositions);
     }

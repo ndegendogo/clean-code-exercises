@@ -54,17 +54,17 @@ class BoardImpl implements Board {
     }
     
     void addImpact(final Position pos) {
-        final Field field = getField(pos.getX(), pos.getY());
-        field.addImpact(1);
+        final int x = pos.getX();
+        final int y = pos.getY();
+        if (!outOfBounds(x, y)) {
+            final Field field = getField(x, y);
+            field.addImpact(1);
+        }
     }
 
     @Override
     public Field getField(final int colNumber, final int lineNumber) {
-        if (outOfBounds(colNumber, lineNumber)) {
-            return Field.getDefault();
-        } else {
-            return fields[lineNumber][colNumber];
-        }
+        return fields[lineNumber][colNumber];
     }
 
     private boolean outOfBounds(final int x, final int y) {

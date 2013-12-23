@@ -12,8 +12,10 @@ class MineSweeperException extends RuntimeException {
     }
     
     enum ErrorCode {
+        ILLEGAL_CONFIGURATION (new String("Illegal configuration")),
         IMPACT_OVERFLOW (new String("Impact overflow")),
-        IMPACT_UNDERFLOW (new String("Impact underflow"));
+        IMPACT_UNDERFLOW (new String("Impact underflow")),
+    ;
         
         private final String errorMessage;
         
