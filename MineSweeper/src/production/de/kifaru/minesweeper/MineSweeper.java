@@ -4,10 +4,9 @@ import java.util.List;
 
 public class MineSweeper {
 
-    static List<String> makeCheatSheetForConfig(final String[] givenConfig) throws MineSweeperException {
-        final Configuration config = Configuration.parse(givenConfig);
-        final Board board = new Board(config.getWidth(), config.getHeight());
-        board.putMines(config.getMinePositions());
+    static List<String> makeCheatSheetForConfig(final String[] givenConfig) {
+        final Configuration config = ConfigurationImpl.parse(givenConfig);
+        final BoardImpl board = new BoardImpl(config);
         return CheatSheet.formatBoard(board);
     }
     

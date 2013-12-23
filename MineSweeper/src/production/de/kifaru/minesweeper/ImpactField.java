@@ -15,7 +15,7 @@ class ImpactField extends Field {
         impact += increment;
     }
 
-    char format() throws MineSweeperException {
+    char format() {
         return CheatSheet.formatImpactField(impact);
     }
 }

@@ -1,6 +1,6 @@
 package de.kifaru.minesweeper;
 
-class MineSweeperException extends Exception {
+class MineSweeperException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

@@ -7,14 +7,14 @@ import org.junit.Test;
 public class CheatSheetTest {
 
     @Test
-    public void formatMineField() throws MineSweeperException {
+    public void formatMineField() {
         final Field field = new MineField();
         final char formattedField = CheatSheet.formatField(field);
         assertEquals('*', formattedField);
     }
     
     @Test
-    public void formatImpactField() throws MineSweeperException {
+    public void formatImpactField() {
         final Field field = new ImpactField(7);
         final char formattedField = CheatSheet.formatField(field);
         assertEquals('7', formattedField);

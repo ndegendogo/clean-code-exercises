@@ -5,7 +5,7 @@ import java.util.List;
 
 class CheatSheet {
 
-    static List<String> formatBoard(final Board board) throws MineSweeperException {
+    static List<String> formatBoard(final Board board) {
         final int width = board.getWidth();
         final int height = board.getHeight();
         final List<String> lines = new ArrayList<String>();
@@ -15,7 +15,7 @@ class CheatSheet {
         return lines;
     }
 
-    private static String formatLine(final Board board, final int lineNumber, final int width) throws MineSweeperException {
+    private static String formatLine(final Board board, final int lineNumber, final int width) {
         final StringBuilder line = new StringBuilder(width);
         for (int colNumber = 0; colNumber < width; colNumber ++) {
             final Field field = board.getField(colNumber, lineNumber);
@@ -24,7 +24,7 @@ class CheatSheet {
         return line.toString();
     }
 
-    static char formatField(final Field field) throws MineSweeperException {
+    static char formatField(final Field field) {
         return field.format();
     }
 
@@ -32,12 +32,16 @@ class CheatSheet {
         return '*';
     }
 
-    static char formatImpactField(final int impact) throws MineSweeperException {
+    static char formatImpactField(final int impact) {
+        ensureImpactValid(impact);
+        return Integer.toString(impact).charAt(0);
+    }
+
+    private static void ensureImpactValid(final int impact) throws MineSweeperException {
         if (impact < 0) {
             throw new MineSweeperException(MineSweeperException.ErrorCode.IMPACT_UNDERFLOW);
         } else if (impact > 9) {
             throw new MineSweeperException(MineSweeperException.ErrorCode.IMPACT_OVERFLOW);
         }
-        return Integer.toString(impact).charAt(0);
     }
 }

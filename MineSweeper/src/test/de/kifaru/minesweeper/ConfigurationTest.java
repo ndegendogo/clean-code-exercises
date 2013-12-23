@@ -12,7 +12,7 @@ public class ConfigurationTest {
     @Test
     public void findOneMineInOneLine() {
         final String[] givenLines = {".*."};
-        final List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
+        final List<Position> foundMines = ConfigurationImpl.findAllMinePositions(givenLines);
         final Position[] expectedMines = new Position[] {new Position(1,0)};
         verifyMines(expectedMines, foundMines);
     }
@@ -20,7 +20,7 @@ public class ConfigurationTest {
     @Test
     public void findMultipleMinesInOneLine() {
         final String[] givenLines = {".*..*."};
-        final List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
+        final List<Position> foundMines = ConfigurationImpl.findAllMinePositions(givenLines);
         final Position[] expectedMines = new Position[] {new Position(1,0), new Position(4,0)};
         verifyMines(expectedMines, foundMines);
     }
@@ -35,7 +35,7 @@ public class ConfigurationTest {
                 ".*..*.", 
                 "......",
                };
-        final List<Position> foundMines = Configuration.findAllMinePositions(givenLines);
+        final List<Position> foundMines = ConfigurationImpl.findAllMinePositions(givenLines);
         final Position[] expectedMines = new Position[] {new Position(1,1), new Position(4,1), new Position(1,4), new Position(4,4)};
         verifyMines(expectedMines, foundMines);
     }
@@ -43,14 +43,14 @@ public class ConfigurationTest {
     @Test
     public void parseEmptyConfig_OneFieldOnly() {
         final String[] givenConfig = new String[] {"."};
-        final Configuration config = Configuration.parse(givenConfig);
+        final Configuration config = ConfigurationImpl.parse(givenConfig);
         verifyConfig(config, 1, 1, new Position[] {});
     }
 
     @Test
     public void parseEmptyConfig_OneLineOnly() {
         final String[] givenConfig = new String[] {"..."};
-        final Configuration config = Configuration.parse(givenConfig);
+        final Configuration config = ConfigurationImpl.parse(givenConfig);
         verifyConfig(config, 3, 1, new Position[] {});
     }
 
@@ -61,14 +61,14 @@ public class ConfigurationTest {
                  ".....",
                  "....."
                 };
-        final Configuration config = Configuration.parse(givenConfig);
+        final Configuration config = ConfigurationImpl.parse(givenConfig);
         verifyConfig(config, 5, 3, new Position[] {});
     }
 
     @Test
     public void parseOneLine_oneMine() {
         final String[] givenConfig = new String[] {".*."};
-        final Configuration config = Configuration.parse(givenConfig);
+        final Configuration config = ConfigurationImpl.parse(givenConfig);
         final Position[] expectedPositions = new Position[] {new Position(1, 0)};
         verifyConfig(config, 3, 1, expectedPositions);
     }
@@ -76,7 +76,7 @@ public class ConfigurationTest {
     @Test
     public void parseMultipleLines_oneMine() {
         final String[] givenConfig = new String[] {"...", ".*.", "..."};
-        final Configuration config = Configuration.parse(givenConfig);
+        final Configuration config = ConfigurationImpl.parse(givenConfig);
         final Position[] expectedPositions = new Position[] {new Position(1, 1)};
         verifyConfig(config, 3, 3, expectedPositions);
     }
@@ -88,7 +88,7 @@ public class ConfigurationTest {
                 "......", 
                 ".*..*.", 
                 "......"};
-        final Configuration config = Configuration.parse(givenConfig);
+        final Configuration config = ConfigurationImpl.parse(givenConfig);
         final Position[] expectedPositions = new Position[] 
             {new Position(1, 1),
              new Position(4, 1)

@@ -10,60 +10,61 @@ public class BoardTest {
     
     @Test
     public void addImpactToEmptyField() {
-        final Board board = createEmptyBoard();
+        final BoardImpl board = createEmptyBoard();
         whenAddImpact(board);
         thenImpact(board, 1);
     }
 
     @Test
     public void addImpactToImpactField_add() {
-        final Board board = createBoardWithImpactField();
+        final BoardImpl board = createBoardWithImpactField();
         whenAddImpact(board);
         thenImpact(board, 2);
     }
     
     @Test
     public void putMine_onEmptyField() {
-        final Board board = createEmptyBoard();
+        final BoardImpl board = createEmptyBoard();
         whenPutMine(board);
         thenMine(board);
     }
 
     @Test
     public void putMine_replaceImpactField() {
-        final Board board = createBoardWithImpactField();
+        final BoardImpl board = createBoardWithImpactField();
         whenPutMine(board);
         thenMine(board);
     }
 
     @Test
     public void putMine_onMineField() {
-        final Board board = createBoardWithMineField();
+        final BoardImpl board = createBoardWithMineField();
         whenPutMine(board);
         thenMine(board);
     }
 
-    private static Board createEmptyBoard() {
-        return new Board(3, 4);
+    private static BoardImpl createEmptyBoard() {
+        final Configuration config = new ConfigurationMock(3, 4);
+        return new BoardImpl(config);
     }
     
-    private static Board createBoardWithImpactField() {
-        final Board board = new Board(3, 4);
-        board.setField(GIVEN_POSITION.getX(), GIVEN_POSITION.getY(), new ImpactField(1));
+    private static BoardImpl createBoardWithImpactField() {
+        final BoardImpl board = createEmptyBoard();
+        board.addImpact(GIVEN_POSITION);
         return board;
     }
 
-    private static Board createBoardWithMineField() {
-        final Board board = new Board(3, 4);
-        board.setField(GIVEN_POSITION.getX(), GIVEN_POSITION.getY(), new MineField());
+    private static BoardImpl createBoardWithMineField() {
+        final BoardImpl board = createEmptyBoard();
+        board.putMine(GIVEN_POSITION);
         return board;
     }
 
-    private static void whenAddImpact(final Board board) {
+    private static void whenAddImpact(final BoardImpl board) {
         board.addImpact(GIVEN_POSITION);
     }
 
-    private static void whenPutMine(final Board board) {
+    private static void whenPutMine(final BoardImpl board) {
         board.putMine(GIVEN_POSITION);
     }
     

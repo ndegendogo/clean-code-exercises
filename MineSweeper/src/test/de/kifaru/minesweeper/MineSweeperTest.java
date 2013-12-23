@@ -10,19 +10,19 @@ import org.junit.*;
 public class MineSweeperTest {
     
     @Test
-    public void emptyBoard_OneFieldOnly() throws MineSweeperException {
+    public void emptyBoard_OneFieldOnly() {
         final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(new String[] {"."});
         verifyCheatSheet(cheatSheet, new String[]{"0"});
     }
 
     @Test
-    public void emptyBoard_OneLineOnly() throws MineSweeperException {
+    public void emptyBoard_OneLineOnly() {
         final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(new String[] {"..."});
         verifyCheatSheet(cheatSheet, new String[]{"000"});
     }
 
     @Test
-    public void emptyBoard_MultipleLines() throws MineSweeperException {
+    public void emptyBoard_MultipleLines() {
         final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[]{".....",
                              ".....",
@@ -34,13 +34,13 @@ public class MineSweeperTest {
     }
 
     @Test
-    public void oneLine_oneMine() throws MineSweeperException {
+    public void oneLine_oneMine() {
         final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(new String[] {".*."});
         verifyCheatSheet(cheatSheet, new String[]{"1*1"});
     }
 
     @Test
-    public void multipleLines_oneMine() throws MineSweeperException {
+    public void multipleLines_oneMine() {
         final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[]{"...", 
                              ".*.", 
@@ -51,7 +51,7 @@ public class MineSweeperTest {
     }
     
     @Test
-    public void multipleLines_multipleMines() throws MineSweeperException {
+    public void multipleLines_multipleMines() {
         final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[]{"......", 
                              ".*..*.", 
@@ -62,7 +62,7 @@ public class MineSweeperTest {
     }
     
     @Test
-    public void oneMine_limitedImpact() throws MineSweeperException {
+    public void oneMine_limitedImpact() {
         final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[] {".....", 
                               ".....",
@@ -78,7 +78,7 @@ public class MineSweeperTest {
     }
     
     @Test
-    public void twoMines_overlappingImpact() throws MineSweeperException {
+    public void twoMines_overlappingImpact() {
         final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[] {".....", 
                               ".*...",
@@ -94,7 +94,7 @@ public class MineSweeperTest {
     }
 
     @Test
-    public void minesAtEdgesAndInCorners() throws MineSweeperException {
+    public void minesAtEdgesAndInCorners() {
         final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[] {"..*..", 
                               ".....",
@@ -110,7 +110,7 @@ public class MineSweeperTest {
     }
 
     @Test
-    public void minesWithMaximumImpact() throws MineSweeperException {
+    public void minesWithMaximumImpact() {
         final List<String> cheatSheet = MineSweeper.makeCheatSheetForConfig(
                 new String[] {".....", 
                               ".***.",
