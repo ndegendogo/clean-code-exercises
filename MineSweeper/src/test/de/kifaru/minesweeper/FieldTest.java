@@ -9,6 +9,38 @@ import de.kifaru.minesweeper.Field.FieldContent;
 public class FieldTest {
 
     @Test
+    public void validImpact_isImpactField() {
+        final Field field = new Field(5);
+        thenImpact(field, 5);
+    }
+    
+    @Test
+    public void zeroImpact_isEmptyField() {
+        final Field field = new Field(0);
+        thenEmpty(field);
+    }
+
+    @Test
+    public void negativeImpact_isInvalidField() {
+        try {
+            new Field(-1);
+            fail();
+        } catch(MineSweeperException e) {
+            assertEquals("Impact underflow", e.getMessage());
+        }
+    }
+
+    @Test
+    public void excessiveImpact_isInvalidField() {
+        try {
+            new Field(10);
+            fail();
+        } catch(MineSweeperException e) {
+            assertEquals("Impact overflow", e.getMessage());
+        }
+    }
+
+    @Test
     public void addImpactToEmptyField() {
         final Field field = createEmptyField();
         whenAddImpact(field);
@@ -43,6 +75,27 @@ public class FieldTest {
         thenMine(field);
     }
 
+    @Test
+    public void formatEmptyField() {
+        final Field field = new Field();
+        final char formattedField = field.format();
+        assertEquals('0', formattedField);
+    }
+    
+    @Test
+    public void formatMineField() {
+        final Field field = new Field(FieldContent.MINE);
+        final char formattedField = field.format();
+        assertEquals('*', formattedField);
+    }
+    
+    @Test
+    public void formatImpactField() {
+        final Field field = new Field(7);
+        final char formattedField = field.format();
+        assertEquals('7', formattedField);
+    }
+    
     private static Field createEmptyField() {
         return new Field();
     }
@@ -69,6 +122,10 @@ public class FieldTest {
     }
 
     private static void thenMine(final Field field) {
-        assertTrue(field.isMine());
+        assertTrue(field.isMineField());
+    }
+
+    private static void thenEmpty(final Field field) {
+        assertTrue(field.isEmptyField());
     }
 }

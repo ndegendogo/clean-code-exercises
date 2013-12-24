@@ -3,47 +3,51 @@ package de.kifaru.minesweeper;
 class Field {
     
     private FieldContent content;
-    private int impact;
     
     Field() {
         content = FieldContent.EMPTY;
     }
     
-    Field(int impact) {
-        this.content = FieldContent.IMPACT;
-        this.impact = impact;
+    Field(FieldContent content) {
+        this.content = content;
     }
 
-    Field(FieldContent contentEnum) {
-        this.content = contentEnum;
-        if (contentEnum == FieldContent.IMPACT) {
-            impact = 1;
+    Field(int impact) {
+        ensureImpactValid(impact);
+        content = FieldContent.values()[impact];
+    }
+
+    private static void ensureImpactValid(final int impact) {
+        if (impact < 0) {
+            throw new MineSweeperException(MineSweeperException.ErrorCode.IMPACT_UNDERFLOW);
+        } else if (impact > 9) {
+            throw new MineSweeperException(MineSweeperException.ErrorCode.IMPACT_OVERFLOW);
         }
     }
 
-    boolean isEmpty() {
-        return content == FieldContent.EMPTY;
+    boolean isEmptyField() {
+        return content.isEmpty();
     }
 
-    boolean isMine() {
-        return content == FieldContent.MINE;
+    boolean isMineField() {
+        return content.isMine();
     }
 
     boolean isImpactField() {
-        return content == FieldContent.IMPACT;
+        return content.isImpact();
     }
 
     int getImpact() {
-        return impact;
+        return content.getImpact();
     }
     
     void addImpact(int increment) {
-        if (isEmpty()) {
-            impact = 1;
-            content = FieldContent.IMPACT;
-        } else if (isImpactField()) {
-            impact += increment;
+        if (isMineField()) {
+            return;
         }
+        int impact = getImpact() + increment;
+        ensureImpactValid(impact);
+        content = FieldContent.values()[impact];
     }
 
     void putMine() {
@@ -51,22 +55,51 @@ class Field {
     }
 
     char format() {
-        switch (content) {
-            case EMPTY:
-                return CheatSheet.formatEmptyField();
-            case MINE:
-                return CheatSheet.formatMineField();
-            case IMPACT:
-                return CheatSheet.formatImpactField(getImpact());
-            default:
-                return 0;
-        }
+        return content.toChar();
     }
 
     enum FieldContent {
-        EMPTY,
-        MINE,
-        IMPACT,
+        EMPTY ('0'),
+        IMPACT ('1'),
+        IMPACT2 ('2'),
+        IMPACT3 ('3'),
+        IMPACT4 ('4'),
+        IMPACT5 ('5'),
+        IMPACT6 ('6'),
+        IMPACT7 ('7'),
+        IMPACT8 ('8'),
+        IMPACT9 ('9'),
+        MINE ('*'),
     ;
+        
+        private final char asChar;
+        
+        private FieldContent(char asChar) {
+            this.asChar = asChar;
+        }
+        
+        private boolean isEmpty() {
+            return this == EMPTY;
+        }
+
+        private boolean isMine() {
+            return this == MINE;
+        }
+
+        private boolean isImpact() {
+            return !isEmpty() && !isMine();
+        }
+
+        private int getImpact() {
+            if (isMine()) {
+                return 0;
+            } else {
+                return ordinal();
+            }
+        }
+
+        private char toChar() {
+            return asChar;
+        }
     }
 }

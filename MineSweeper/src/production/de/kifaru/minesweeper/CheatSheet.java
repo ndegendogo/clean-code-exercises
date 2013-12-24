@@ -28,24 +28,4 @@ class CheatSheet {
         return field.format();
     }
 
-    static char formatEmptyField() {
-        return '0';
-    }
-
-    static char formatMineField() {
-        return '*';
-    }
-
-    static char formatImpactField(final int impact) {
-        ensureImpactValid(impact);
-        return Integer.toString(impact).charAt(0);
-    }
-
-    private static void ensureImpactValid(final int impact) throws MineSweeperException {
-        if (impact < 0) {
-            throw new MineSweeperException(MineSweeperException.ErrorCode.IMPACT_UNDERFLOW);
-        } else if (impact > 9) {
-            throw new MineSweeperException(MineSweeperException.ErrorCode.IMPACT_OVERFLOW);
-        }
-    }
 }
