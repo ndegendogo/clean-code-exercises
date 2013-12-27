@@ -10,20 +10,20 @@ public class FieldTest {
 
     @Test
     public void validImpact_isImpactField() {
-        final Field field = new Field(5);
+        final Field field = createImpactField(5);
         thenImpact(field, 5);
     }
     
     @Test
     public void zeroImpact_isEmptyField() {
-        final Field field = new Field(0);
+        final Field field = createImpactField(0);
         thenEmpty(field);
     }
 
     @Test
     public void negativeImpact_isInvalidField() {
         try {
-            new Field(-1);
+            createImpactField(-1);
             fail();
         } catch(MineSweeperException e) {
             assertEquals("Impact underflow", e.getMessage());
@@ -33,7 +33,7 @@ public class FieldTest {
     @Test
     public void excessiveImpact_isInvalidField() {
         try {
-            new Field(10);
+            createImpactField(10);
             fail();
         } catch(MineSweeperException e) {
             assertEquals("Impact overflow", e.getMessage());
@@ -48,10 +48,38 @@ public class FieldTest {
     }
 
     @Test
-    public void addImpactToImpactField_add() {
+    public void addImpactToImpactField() {
         final Field field = createImpactField();
         whenAddImpact(field);
         thenImpact(field, 2);
+    }
+    
+    @Test
+    public void addRepeatedImpact() {
+        final Field field = createImpactField();
+        whenAddImpact(field);
+        whenAddImpact(field);
+        whenAddImpact(field);
+        thenImpact(field, 4);
+    }
+    
+    @Test
+    public void addExcessiveImpact_overflow() {
+        final Field field = createImpactField();
+        whenAddImpact(field);
+        whenAddImpact(field);
+        whenAddImpact(field);
+        whenAddImpact(field);
+        whenAddImpact(field);
+        whenAddImpact(field);
+        whenAddImpact(field);
+        whenAddImpact(field);
+        try {
+            whenAddImpact(field);
+            fail();
+        } catch(MineSweeperException e) {
+            assertEquals("Impact overflow", e.getMessage());
+        }
     }
     
     @Test
@@ -77,25 +105,25 @@ public class FieldTest {
 
     @Test
     public void formatEmptyField() {
-        final Field field = new Field();
+        final Field field = createEmptyField();
         final char formattedField = field.format();
         assertEquals('0', formattedField);
     }
     
     @Test
     public void formatMineField() {
-        final Field field = new Field(FieldContent.MINE);
+        final Field field = createMineField();
         final char formattedField = field.format();
         assertEquals('*', formattedField);
     }
     
     @Test
     public void formatImpactField() {
-        final Field field = new Field(7);
+        final Field field = createImpactField(7);
         final char formattedField = field.format();
         assertEquals('7', formattedField);
     }
-    
+
     private static Field createEmptyField() {
         return new Field();
     }
@@ -104,6 +132,10 @@ public class FieldTest {
         return new Field(FieldContent.IMPACT);
     }
 
+    private Field createImpactField(final int impact) {
+        return new Field(impact);
+    }
+    
     private static Field createMineField() {
         return new Field(FieldContent.MINE);
     }

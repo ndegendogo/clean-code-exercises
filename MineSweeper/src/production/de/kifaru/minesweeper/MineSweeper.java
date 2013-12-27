@@ -6,7 +6,7 @@ public class MineSweeper {
 
     static List<String> makeCheatSheetForConfig(final String[] givenConfig) {
         final Configuration config = ConfigurationImpl.parse(givenConfig);
-        final BoardImpl board = new BoardImpl(config);
+        final Board board = BoardImpl.createBoard(config);
         return CheatSheet.formatBoard(board);
     }
     
