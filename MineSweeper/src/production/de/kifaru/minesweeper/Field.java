@@ -2,6 +2,9 @@ package de.kifaru.minesweeper;
 
 class Field {
     
+    private static int MIN_IMPACT = 0;
+    private static int MAX_IMPACT = 9;
+
     private FieldContent content;
     
     Field() {
@@ -12,15 +15,19 @@ class Field {
         this.content = content;
     }
 
-    Field(int impact) {
+    Field(final int impact) {
+        content = createContent(impact);
+    }
+
+    private FieldContent createContent(final int impact) {
         ensureImpactValid(impact);
-        content = FieldContent.values()[impact];
+        return FieldContent.values()[impact];
     }
 
     private static void ensureImpactValid(final int impact) {
-        if (impact < 0) {
+        if (impact < MIN_IMPACT) {
             throw new MineSweeperException(MineSweeperException.ErrorCode.IMPACT_UNDERFLOW);
-        } else if (impact > 9) {
+        } else if (impact > MAX_IMPACT) {
             throw new MineSweeperException(MineSweeperException.ErrorCode.IMPACT_OVERFLOW);
         }
     }
@@ -41,13 +48,10 @@ class Field {
         return content.getImpact();
     }
     
-    void addImpact(int increment) {
-        if (isMineField()) {
-            return;
+    void addImpact(final int increment) {
+        if (!isMineField()) {
+            content = createContent(getImpact() + increment);
         }
-        int impact = getImpact() + increment;
-        ensureImpactValid(impact);
-        content = FieldContent.values()[impact];
     }
 
     void putMine() {

@@ -9,6 +9,15 @@ class BoardImpl implements Board {
     private final int height;
     private final Field fields[][];
     
+    static Board createBoard(final Configuration config) {
+        final BoardImpl board = new BoardImpl(config.getWidth(), config.getHeight());
+        final Iterable<Position> positions = config.getMinePositions();
+        final List<Position> impactRegions = getImpactRegions(positions);
+        board.addImpact(impactRegions);
+        board.putMines( positions);
+        return board;
+    }
+    
     private BoardImpl(final int width, final int height) {
         this.width = width;
         this.height = height;
@@ -18,14 +27,6 @@ class BoardImpl implements Board {
                 fields[j][i] = new Field();
             }
         }
-    }
-    
-    public BoardImpl(final Configuration config) {
-        this(config.getWidth(), config.getHeight());
-        Iterable<Position> positions = config.getMinePositions();
-        final List<Position> impactRegions = getImpactRegions(positions);
-        addImpact(impactRegions);
-        putMines( positions);
     }
     
     private static List<Position> getImpactRegions(final Iterable<Position> minePositions) {
