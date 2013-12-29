@@ -174,7 +174,7 @@ public class MineSweeperTest {
     }
 
     private List<String> makeCheatSheet(final String[] givenConfig) {
-        return MineSweeper.makeCheatSheetForConfig(Arrays.asList(givenConfig));
+        return MineSweeper.makeCheatSheet(Arrays.asList(givenConfig));
     }
 
     private static void verifyCheatSheet(final List<String> cheatSheet, final String[] strings) {

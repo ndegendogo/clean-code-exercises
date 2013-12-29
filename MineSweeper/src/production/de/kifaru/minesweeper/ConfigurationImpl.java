@@ -1,5 +1,7 @@
 package de.kifaru.minesweeper;
 
+import static de.kifaru.minesweeper.MineSweeperException.ErrorCode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ class ConfigurationImpl implements Configuration {
 
     private static void checkDimensions(final List<String> config) {
         if (config.size() == 0 || config.get(0).length() == 0) {
-            throw new MineSweeperException(MineSweeperException.ErrorCode.ILLEGAL_CONFIGURATION);
+            throw new MineSweeperException(ErrorCode.ILLEGAL_CONFIGURATION);
         }
     }
     

@@ -1,5 +1,7 @@
 package de.kifaru.minesweeper;
 
+import static de.kifaru.minesweeper.MineSweeperException.ErrorCode;
+
 class Field {
     
     private static int MIN_IMPACT = 0;
@@ -26,9 +28,9 @@ class Field {
 
     private static void ensureImpactValid(final int impact) {
         if (impact < MIN_IMPACT) {
-            throw new MineSweeperException(MineSweeperException.ErrorCode.IMPACT_UNDERFLOW);
+            throw new MineSweeperException(ErrorCode.IMPACT_UNDERFLOW);
         } else if (impact > MAX_IMPACT) {
-            throw new MineSweeperException(MineSweeperException.ErrorCode.IMPACT_OVERFLOW);
+            throw new MineSweeperException(ErrorCode.IMPACT_OVERFLOW);
         }
     }
 
